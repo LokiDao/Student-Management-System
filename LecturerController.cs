@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Student_Management_System
 {
-    internal class Lecturers : ProfileInterface
+    internal class LecturerController : ProfileControllerInterface
     {
         public List<Lecturer> lecturers;
 
-        public Lecturers()
+        public LecturerController()
         {
             this.lecturers = new List<Lecturer>();
         }
 
-        public Lecturers(List<Lecturer> lcts)
+        public LecturerController(List<Lecturer> lcts)
         {
             this.lecturers = lcts;
         }
@@ -43,7 +43,7 @@ namespace Student_Management_System
                     {
                         rs = lct.setId(id);
                         if (rs == false)
-                            Console.WriteLine("Incorrect ID. Please try again or press \"C\" key to cancel.");
+                            Console.WriteLine("Incorrect ID. Please try again or input \"C\" key to cancel.");
                     }
                 }
             } while (id != null && !id.Equals("")
@@ -71,7 +71,7 @@ namespace Student_Management_System
                 {
                     rs = lct.setDoB(dob);
                     if (rs == false)
-                        Console.WriteLine("Incorrect Date of Birth. Please try again or press \"C\" key to cancel.");
+                        Console.WriteLine("Incorrect Date of Birth. Please try again or input \"C\" key to cancel.");
                 }
             } while (dob != null && !dob.Equals("")
             && !dob.Equals("C") && !dob.Equals("c")
@@ -115,8 +115,8 @@ namespace Student_Management_System
             lct.setDept(Console.ReadLine());
 
             this.lecturers.Add(lct);
-            Console.WriteLine("Lecturer " + id + " has been added successfully.");
-            this.display(this.get(id), null);
+            string message = "Lecturer " + id + " has been added successfully.";
+            this.display(this.get(id), null, message);
         }
 
         public Profile get(string id)
@@ -153,7 +153,7 @@ namespace Student_Management_System
                     lct = (Lecturer) this.get(id);
                     if (lct == null || lct.getId() == null || lct.getId().Equals(""))
                         Console.WriteLine("Lecturer ID " + id + " does not exist." +
-                            " Please try again or press \"C\" key to cancel.");
+                            " Please try again or input \"C\" key to cancel.");
                 }
             } while (id != null && !id.Equals("")
             && !id.Equals("C") && !id.Equals("c")
@@ -167,13 +167,13 @@ namespace Student_Management_System
             }
 
             Console.WriteLine("Current Lecturer Name: " + lct.getName());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             string name = Console.ReadLine();
             if (name != null && !name.Equals(""))
                 lct.setName(name);
 
             Console.WriteLine("Current Date of Birth: " + lct.getDoB());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             bool rs = false;
             string dob = null;
             do
@@ -185,7 +185,7 @@ namespace Student_Management_System
                     rs = lct.setDoB(dob);
                     if (rs == false)
                         Console.WriteLine("Incorrect Date of Birth." +
-                            " Please try again or press \"Enter\" to skeep this step or press \"C\" key to cancel.");
+                            " Please try again or press \"Enter\" to skip this step or input \"C\" key to cancel.");
                 }
             } while (dob != null && !dob.Equals("")
             && !dob.Equals("C") && !dob.Equals("c")
@@ -199,7 +199,7 @@ namespace Student_Management_System
             }
 
             Console.WriteLine("Current Email: " + lct.getEmail());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             rs = false;
             string email = null;
             do
@@ -211,7 +211,7 @@ namespace Student_Management_System
                     rs = lct.setEmail(email);
                     if (rs == false)
                         Console.WriteLine("Incorrect Email." +
-                            " Please try again or press \"Enter\" to skeep this step or press \"C\" key to cancel.");
+                            " Please try again or press \"Enter\" to skip this step or input \"C\" key to cancel.");
                 }
 
             } while (email != null && !email.Equals("")
@@ -226,19 +226,19 @@ namespace Student_Management_System
             }
 
             Console.WriteLine("Current Address: " + lct.getAddress());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             string address = Console.ReadLine();
             if (address != null && !address.Equals(""))
                 lct.setAddress(address);
 
             Console.WriteLine("Current Department: " + lct.getDept());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             string dept = Console.ReadLine();
             if (dept != null && !dept.Equals(""))
                 lct.setDept(dept);
 
-            Console.WriteLine("Lecturer " + id + " has been updated successfully.");
-            this.display(this.get(id), null);
+            string message = "Lecturer " + id + " has been updated successfully.";
+            this.display(this.get(id), null, message);
         }
 
         public void delete()
@@ -257,7 +257,7 @@ namespace Student_Management_System
                     lct = (Lecturer) this.get(id);
                     if (lct == null || lct.getId() == null || lct.getId().Equals(""))
                         Console.WriteLine("Lecturer ID " + id + " does not exist." +
-                            " Please try again or press \"C\" key to cancel.");
+                            " Please try again or input \"C\" key to cancel.");
                 }
             } while (id != null && !id.Equals("")
             && !id.Equals("C") && !id.Equals("c")
@@ -271,8 +271,8 @@ namespace Student_Management_System
             }
 
             this.lecturers.Remove(lct);
-            Console.WriteLine("Lecturer " + id + " has been deleted successfully.");
-            this.display(null, this.getMultiple(null));
+            string message = "Lecturer " + id + " has been deleted successfully.";
+            this.display(null, this.getMultiple(null), message);
         }
 
         public Profile[] getMultiple(string name)
@@ -298,9 +298,10 @@ namespace Student_Management_System
             }
         }
 
-        public void display(Profile profile, Profile[] profiles)
+        public void display(Profile profile, Profile[] profiles, string message)
         {
             Console.Clear();
+            if (message != null && !message.Equals("")) Console.WriteLine(message);
             Console.WriteLine("| Lecturer ID | Lecturer Name | Date of Birth | Email | Address | Department |");
             if (profile == null && (profiles == null || profiles.Length <= 0)) Console.WriteLine("No data found.");
             else if (profile != null)

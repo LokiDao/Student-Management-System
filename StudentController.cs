@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Student_Management_System
 {
-    internal class Students : ProfileInterface
+    internal class StudentController : ProfileControllerInterface
     {
         public List<Student> students;
 
-        public Students()
+        public StudentController()
         {
             this.students = new List<Student>();
         }
 
-        public Students(List<Student> stds)
+        public StudentController(List<Student> stds)
         {
             this.students = stds;
         }
@@ -43,7 +43,7 @@ namespace Student_Management_System
                     {
                         rs = std.setId(id);
                         if (rs == false) 
-                            Console.WriteLine("Incorrect ID. Please try again or press \"C\" key to cancel.");
+                            Console.WriteLine("Incorrect ID. Please try again or input \"C\" key to cancel.");
                     }
                 }
             } while (id != null && !id.Equals("") 
@@ -71,7 +71,7 @@ namespace Student_Management_System
                 {
                     rs = std.setDoB(dob);
                     if (rs == false)
-                        Console.WriteLine("Incorrect Date of Birth. Please try again or press \"C\" key to cancel.");
+                        Console.WriteLine("Incorrect Date of Birth. Please try again or input \"C\" key to cancel.");
                 }
             } while (dob != null && !dob.Equals("") 
             && !dob.Equals("C") && !dob.Equals("c") 
@@ -115,8 +115,8 @@ namespace Student_Management_System
             std.setBatch(Console.ReadLine());
 
             this.students.Add(std);
-            Console.WriteLine("Student " + id + " has been added successfully.");
-            this.display(this.get(id), null);
+            string message = "Student " + id + " has been added successfully.";
+            this.display(this.get(id), null, message);
         }
 
         public Profile get(string id)
@@ -152,7 +152,7 @@ namespace Student_Management_System
                     std = (Student)this.get(id);
                     if (std == null || std.getId() == null || std.getId().Equals(""))
                         Console.WriteLine("Student ID " + id + " does not exist." +
-                            " Please try again or press \"C\" key to cancel.");
+                            " Please try again or input \"C\" key to cancel.");
                 }
             } while (id != null && !id.Equals("") 
             && !id.Equals("C") && !id.Equals("c") 
@@ -166,14 +166,14 @@ namespace Student_Management_System
             }
 
             Console.WriteLine("Current Student Name: " + std.getName());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             string name = Console.ReadLine();
             if (name != null && !name.Equals("") 
                 && !name.Equals("K") && !name.Equals("k")) 
                 std.setName(name);
 
             Console.WriteLine("Current Date of Birth: " + std.getDoB());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             bool rs = false;
             string dob = null;
             do
@@ -185,7 +185,7 @@ namespace Student_Management_System
                     rs = std.setDoB(dob);
                     if (rs == false)
                         Console.WriteLine("Incorrect Date of Birth." +
-                            " Please try again or press \"Enter\" to skeep this step or press \"C\" key to cancel.");
+                            " Please try again or press \"Enter\" to skip this step or input \"C\" key to cancel.");
                 }
             } while (dob != null && !dob.Equals("") 
             && !dob.Equals("C") && !dob.Equals("c")
@@ -199,7 +199,7 @@ namespace Student_Management_System
             }
 
             Console.WriteLine("Current Email: " + std.getEmail());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             rs = false;
             string email = null;
             do
@@ -211,7 +211,7 @@ namespace Student_Management_System
                     rs = std.setEmail(email);
                     if (rs == false)
                         Console.WriteLine("Incorrect Email." +
-                            " Please try again or press \"Enter\" to skeep this step or press \"C\" key to cancel.");
+                            " Please try again or press \"Enter\" to skip this step or input \"C\" key to cancel.");
                 }
                 
             } while (email != null && !email.Equals("") 
@@ -226,19 +226,19 @@ namespace Student_Management_System
             }
 
             Console.WriteLine("Current Address: " + std.getAddress());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             string address = Console.ReadLine();
             if (address != null && !address.Equals(""))
                 std.setAddress(address);
 
             Console.WriteLine("Current Batch/Class: " + std.getBatch());
-            Console.WriteLine("Please input a new one or press \"Enter\" to skeep this step.");
+            Console.WriteLine("Please input a new one or press \"Enter\" to skip this step.");
             string batch = Console.ReadLine();
             if (batch != null && !batch.Equals(""))
                 std.setBatch(batch);
 
-            Console.WriteLine("Student " + id + " has been updated successfully.");
-            this.display(this.get(id), null);
+            string message = "Student " + id + " has been updated successfully.";
+            this.display(this.get(id), null, message);
         }
 
         public void delete()
@@ -257,7 +257,7 @@ namespace Student_Management_System
                     std = (Student)this.get(id);
                     if (std == null || std.getId() == null || std.getId().Equals(""))
                         Console.WriteLine("Student ID " + id + " does not exist." +
-                            " Please try again or press \"C\" key to cancel.");
+                            " Please try again or input \"C\" key to cancel.");
                 }      
             } while (id != null && !id.Equals("") 
             && !id.Equals("C") && !id.Equals("c") 
@@ -271,8 +271,8 @@ namespace Student_Management_System
             }
 
             this.students.Remove(std);
-            Console.WriteLine("Student " + id + " has been deleted successfully.");
-            this.display(null, this.getMultiple(null));
+            string message = "Student " + id + " has been deleted successfully.";
+            this.display(null, this.getMultiple(null), message);
         }
 
         public Profile[] getMultiple(string name)
@@ -298,9 +298,10 @@ namespace Student_Management_System
             }
         }
 
-        public void display(Profile profile, Profile[] profiles)
+        public void display(Profile profile, Profile[] profiles, string message)
         {
             Console.Clear();
+            if(message != null && !message.Equals("")) Console.WriteLine(message);
             Console.WriteLine("| Student ID | Student Name | Date of Birth | Email | Address | Batch/Class |");
             if (profile == null && (profiles == null || profiles.Length <= 0)) Console.WriteLine("No data found.");
             else if (profile != null)

@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 String opt = null;
-Student_Management_System.Students students = new Student_Management_System.Students();
-Student_Management_System.Lecturers lecturers = new Student_Management_System.Lecturers();
+Student_Management_System.StudentController students = new Student_Management_System.StudentController();
+Student_Management_System.LecturerController lecturers = new Student_Management_System.LecturerController();
 
 do
 {
@@ -47,7 +47,7 @@ do
                         Console.ReadLine();
                         break;
                     case "2":
-                        students.display(null, students.getMultiple(null));
+                        students.display(null, students.getMultiple(null), null);
                         Console.WriteLine("Press any key to back to Student Management menu.");
                         Console.ReadLine();
                         break;
@@ -56,7 +56,7 @@ do
                         Console.WriteLine("Input Student's name for searching:");
                         string name = Console.ReadLine();
 
-                        students.display(null, students.getMultiple(name));
+                        students.display(null, students.getMultiple(name), null);
                         Console.WriteLine("Press any key to back to Student Management menu.");
                         Console.ReadLine();
                         break;
@@ -86,11 +86,11 @@ do
                 Console.Clear();
                 Console.WriteLine("=======================");
                 Console.WriteLine(" ");
-                Console.WriteLine("1.	Add new lecturer");
-                Console.WriteLine("2.	View all lecturers");
-                Console.WriteLine("3.	Search lecturers");
-                Console.WriteLine("4.	Delete lecturers");
-                Console.WriteLine("5.	Update lecturer");
+                Console.WriteLine("1.	Add new Lecturer");
+                Console.WriteLine("2.	View all Lecturers");
+                Console.WriteLine("3.	Search Lecturers");
+                Console.WriteLine("4.	Delete Lecturers");
+                Console.WriteLine("5.	Update Lecturer");
                 Console.WriteLine("6.	Back to main menu");
                 Console.WriteLine(" ");
                 Console.WriteLine("=======================");
@@ -106,16 +106,16 @@ do
                         Console.ReadLine();
                         break;
                     case "2":
-                        lecturers.display(null, lecturers.getMultiple(null));
+                        lecturers.display(null, lecturers.getMultiple(null), null);
                         Console.WriteLine("Press any key to back to Lecturer Management menu.");
                         Console.ReadLine();
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine("Input Student's name for searching:");
+                        Console.WriteLine("Input Lecturer's name for searching:");
                         string name = Console.ReadLine();
 
-                        lecturers.display(null, lecturers.getMultiple(name));
+                        lecturers.display(null, lecturers.getMultiple(name), null);
                         Console.WriteLine("Press any key to back to Lecturer Management menu.");
                         Console.ReadLine();
                         break;

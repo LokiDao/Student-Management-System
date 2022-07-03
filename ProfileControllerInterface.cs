@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Student_Management_System
 {
-    internal interface ProfileInterface
+    internal interface ProfileControllerInterface
     {
         public void add();
         public Profile get(string id);
         public void update();
         public void delete();
         public Profile[] getMultiple(string name);
-        public void display(Profile profile, Profile[] profiles);
+        public void display(Profile profile, Profile[] profiles, string message);
     }
 }
